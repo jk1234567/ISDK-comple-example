@@ -1,0 +1,56 @@
+/*
+ * Copyright (c) AppDynamics, Inc., and its affiliates
+ * 2016
+ * All Rights Reserved
+ * THIS IS UNPUBLISHED PROPRIETARY CODE OF APPDYNAMICS, INC.
+ * The copyright notice above does not evidence any actual or intended publication of such source code
+ */
+
+apply plugin: 'java'
+apply plugin: 'idea'
+
+group 'sample-sdk-consumer'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.5
+
+repositories {
+    maven {
+       //original url("https://nexus.corp.appdynamics.com/nexus/content/repositories/builds")
+        url("https://nexus3.corp.appdynamics.com/repository/maven-releases")
+    }
+    mavenCentral()
+}
+
+dependencies {
+    //original compile group: 'com.appdynamics.agent', name: 'instrumentation-sdk', version: '02e75797f9351d576a29a632469c2b8b4b79aefe'
+    //slight chanced compile group: 'com.appdynamics.agent', name: 'instrumentation-sdk', version: '51d3fa6a0959d841ad8a9d4883f7ec34ea3e1c33'
+    compile group: 'com.appdynamics.agent', name: 'instrumentation-sdk', version: '4.4.0.15219'
+}
+
+idea {
+    module {
+        downloadSources = true
+    }
+}
+
+/**
+ * Want to exclude the test keystore from the generated extension jar
+ */
+jar {
+    exclude('**/*.properties')
+    exclude('**/*.keystore')
+}
+
+/**
+ * Reuses the Ant signjar task to sign the target jar
+ */
+task signjar(dependsOn: jar) doLast {
+    ant.signjar(keystore: "src/main/resources/test.keystore",
+            storepass: "password",
+            jar: "${buildDir}/libs/${project.name}.jar",
+            alias: "test-alias",
+            keypass: "shh",
+            verbose: "true")
+}
+
