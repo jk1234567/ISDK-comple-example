@@ -12,20 +12,17 @@ apply plugin: 'idea'
 group 'sample-sdk-consumer'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.5
+//sourceCompatibility = 1.5
 
 repositories {
     maven {
-       //original url("https://nexus.corp.appdynamics.com/nexus/content/repositories/builds")
         url("https://nexus3.corp.appdynamics.com/repository/maven-releases")
     }
     mavenCentral()
 }
 
 dependencies {
-    //original compile group: 'com.appdynamics.agent', name: 'instrumentation-sdk', version: '02e75797f9351d576a29a632469c2b8b4b79aefe'
-    //slight chanced compile group: 'com.appdynamics.agent', name: 'instrumentation-sdk', version: '51d3fa6a0959d841ad8a9d4883f7ec34ea3e1c33'
-    compile group: 'com.appdynamics.agent', name: 'instrumentation-sdk', version: '4.4.0.15219'
+    compile group: 'com.appdynamics.agent', name: 'instrumentation-sdk', version: '4.5.6.24621'
 }
 
 idea {
